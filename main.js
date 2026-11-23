@@ -19,7 +19,7 @@
         <p>${esc(s.text)}</p>
       </div>
       ${s.shot ? `<figure class="site-shot"><span class="bar"><i></i><i></i><i></i></span><img src="${esc(s.shot)}" alt="Скрин сайта" loading="lazy"></figure>` : ''}
-      <span class="price">${s.old ? `<s>${esc(s.old)}</s>` : ''}${s.from ? '<small>от</small>' : ''}${esc(s.price)}</span>
+      <span class="price-wrap"><span class="price">${s.old ? `<s>${esc(s.old)}</s>` : ''}${s.from ? '<small>от</small>' : ''}${esc(s.price)}</span>${s.note ? `<span class="price-note">${esc(s.note)}</span>` : ''}</span>
     </article>`).join('');
 
   // ---------- портфолио ----------
@@ -247,4 +247,35 @@
     });
   };
   if (document.readyState === 'complete') startLenis(); else addEventListener('load', startLenis);
+})();
+
+// ---------- цветочки за мышкой ----------
+// при движении мышки рассыпаются маленькие цветы, по клику (и касанию на телефоне) — букетик
+(() => {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const colors = ['#D8156F', '#F2A7C7', '#F8DCE8', '#E85A9A'];
+  const layer = document.createElement('div');
+  layer.className = 'petals';
+  document.body.appendChild(layer);
+  let count = 0;
+  const spawn = (x, y, big) => {
+    if (count > 40) return;
+    const size = (big ? 20 : 16) + Math.random() * (big ? 18 : 12);
+    const el = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    el.setAttribute('class', 'petal');
+    el.innerHTML = '<use href="#flower"/>';
+    el.style.cssText = `left:${x - size / 2}px;top:${y - size / 2}px;width:${size}px;height:${size}px;color:${colors[Math.random() * colors.length | 0]};` +
+      `--dx:${(Math.random() - .5) * (big ? 160 : 60)}px;--dy:${(big ? 60 : 40) + Math.random() * (big ? 120 : 60)}px;--rot:${(Math.random() - .5) * 360}deg;--t:${1.1 + Math.random() * .7}s`;
+    layer.appendChild(el); count++;
+    el.addEventListener('animationend', () => { el.remove(); count--; });
+  };
+  let lx = 0, ly = 0;
+  if (matchMedia('(hover: hover)').matches) {
+    addEventListener('pointermove', e => {
+      if (Math.hypot(e.clientX - lx, e.clientY - ly) < 46) return;
+      lx = e.clientX; ly = e.clientY;
+      spawn(e.clientX, e.clientY, false);
+    }, { passive: true });
+  }
+  addEventListener('pointerdown', e => { for (let i = 0; i < 7; i++) spawn(e.clientX, e.clientY, true); }, { passive: true });
 })();

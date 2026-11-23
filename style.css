@@ -500,3 +500,22 @@ main{position:relative;z-index:2;background:var(--bg)}
 .hint{left:0!important;right:0;margin:0 auto;transform:none!important;width:max-content;bottom:18px!important;display:flex;align-items:center;gap:10px;padding:11px 20px;border-radius:999px;background:rgba(62,60,28,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);text-shadow:none;letter-spacing:.2em;font-size:12px;z-index:5}
 .hint::after{content:"↓";width:auto;height:auto;margin:0;background:none!important;box-shadow:none;font-size:15px;letter-spacing:0;animation:hintBounce 1.6s ease-in-out infinite}
 @keyframes hintBounce{0%,100%{transform:translateY(-2px)}50%{transform:translateY(3px)}}
+
+/* цена с подписью под ней (например «временная цена») */
+.price-wrap{display:flex;flex-direction:column;align-items:flex-start;gap:8px;margin-top:24px;flex:none}
+.price-wrap .price{margin:0!important}
+.svc.wide .price-wrap,.svc.site .price-wrap{margin:0 0 0 auto;align-items:center}
+.price-note{font:700 22px/1 var(--f-hand);color:var(--magenta);transform:rotate(-3deg)}
+.svc.wide:not(.site) .price-note{color:var(--pink-soft)}
+@media (max-width:700px){.svc.wide .price-wrap,.svc.site .price-wrap{margin:24px 0 0;align-items:flex-start}}
+
+/* цветочки за мышкой */
+.petals{position:fixed;inset:0;pointer-events:none;z-index:60;overflow:hidden}
+.petal{position:absolute;filter:drop-shadow(0 3px 4px rgba(62,60,28,.18));animation:petalFall var(--t,1.4s) cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes petalFall{
+  0%{opacity:0;transform:translate(0,0) scale(.3) rotate(0)}
+  15%{opacity:1;transform:translate(calc(var(--dx)*.15),-6px) scale(1) rotate(calc(var(--rot)*.2))}
+  100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.7) rotate(var(--rot))}
+}
+.fi-notes{top:-200px!important;left:0!important}
+@media (max-width:700px){.fi-notes{top:-80px!important}}
