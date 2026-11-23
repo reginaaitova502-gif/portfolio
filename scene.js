@@ -94,7 +94,7 @@
     const max = intro.offsetHeight - vh;
     const p = clamp(-intro.getBoundingClientRect().top / max, 0, 1);
 
-    hint.style.opacity = (1 - seg(p, 0, .04)) * .7;
+    hint.style.opacity = 1 - seg(p, 0, .04);
 
     // 1. видео: время по скроллу, кадр плавно «поворачивает» к ноутбуку
     const tv = seg(p, 0, T_VIDEO);
