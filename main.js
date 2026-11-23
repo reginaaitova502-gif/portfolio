@@ -12,13 +12,14 @@
 
   // ---------- услуги ----------
   $('svcGrid').innerHTML = S.services.map((s, i) => `
-    <article class="svc reveal${s.wide ? ' wide' : ''}">
+    <article class="svc reveal${s.wide ? ' wide' : ''}${s.site ? ' site' : ''}">
       <div>
         <span class="num">${String(i + 1).padStart(2, '0')}</span>
         <h3>${esc(s.title)}</h3>
         <p>${esc(s.text)}</p>
       </div>
-      <span class="price">${s.from ? '<small>от</small>' : ''}${esc(s.price)}</span>
+      ${s.shot ? `<figure class="site-shot"><span class="bar"><i></i><i></i><i></i></span><img src="${esc(s.shot)}" alt="Скрин сайта" loading="lazy"></figure>` : ''}
+      <span class="price">${s.old ? `<s>${esc(s.old)}</s>` : ''}${s.from ? '<small>от</small>' : ''}${esc(s.price)}</span>
     </article>`).join('');
 
   // ---------- портфолио ----------
