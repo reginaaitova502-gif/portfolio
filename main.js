@@ -17,9 +17,10 @@
         <span class="num">${String(i + 1).padStart(2, '0')}</span>
         <h3>${esc(s.title)}</h3>
         <p>${esc(s.text)}</p>
+        ${s.small ? `<p class="svc-small">${esc(s.small)}</p>` : ''}
       </div>
       ${s.shot ? `<figure class="site-shot"><span class="bar"><i></i><i></i><i></i></span><img src="${esc(s.shot)}" alt="Скрин сайта" loading="lazy"></figure>` : ''}
-      <span class="price-wrap"><span class="price">${s.old ? `<s>${esc(s.old)}</s>` : ''}${s.from ? '<small>от</small>' : ''}${esc(s.price)}</span>${s.note ? `<span class="price-note">${esc(s.note)}</span>` : ''}</span>
+      <span class="price-wrap"><span class="price">${s.old ? `<s>${esc(s.old)}</s>` : ''}${s.from ? '<small>от</small>' : ''}${esc(s.price)}${s.per ? `<small>${esc(s.per)}</small>` : ''}</span>${s.note ? `<span class="price-note">${esc(s.note)}</span>` : ''}</span>
     </article>`).join('');
 
   // ---------- портфолио ----------
